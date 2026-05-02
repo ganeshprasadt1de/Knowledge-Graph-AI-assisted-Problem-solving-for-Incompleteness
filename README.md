@@ -90,8 +90,6 @@ graphs/professions/str_lbd.ttl
 graphs/professions/mep_lbd.ttl
 ```
 
-The training dataset and the project RDF graphs are not the same project.
-
 The training dataset contains `spatial_relationships_detailed.csv` files. These files already contain spatial relationship labels.
 
 Example labels:
@@ -118,7 +116,7 @@ A triple means:
 subject - predicate - object
 ```
 
-The program trains on element types instead of exact element names. This is needed because the public dataset and the project graphs do not contain the same exact building objects.
+The program trains on element types instead of exact element names. This lets the trained model score type patterns found in the project graphs.
 
 Positive triples come from the dataset rows.
 
