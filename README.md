@@ -90,6 +90,8 @@ graphs/professions/str_lbd.ttl
 graphs/professions/mep_lbd.ttl
 ```
 
+The training dataset and the project RDF graphs are not the same project.
+
 The training dataset contains `spatial_relationships_detailed.csv` files. These files already contain spatial relationship labels.
 
 Example labels:
@@ -138,7 +140,7 @@ This teaches the embedding model which type relationships are more likely and wh
 
 Embedding means representing entities and relations as vectors. A vector is a list of numbers. The model learns number patterns that give higher scores to likely triples and lower scores to unlikely triples.
 
-After training, the program reads the three project RDF graphs. It checks the geometry in those graphs by comparing bounding boxes.
+After training, the program reads the three project RDF graphs. It checks the actual objects and actual geometry in those graphs by comparing bounding boxes.
 
 A bounding box is a simple 3D box around an object. If two bounding boxes overlap, the two objects may occupy the same space.
 

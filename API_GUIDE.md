@@ -449,7 +449,7 @@ fully_contained
 face_overlap
 ```
 
-The model is trained on element-type triples rather than raw element IDs. This is needed because the public dataset and the project RDF graphs contain different building elements.
+The model is trained on element-type triples rather than raw element IDs. This is needed because the public dataset and the project RDF graphs contain different building elements from different source projects.
 
 The report score combines three parts:
 

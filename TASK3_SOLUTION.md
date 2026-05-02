@@ -396,7 +396,24 @@ The patch should be reviewed before insertion into the project graph.
 
 ## 2. Training Data
 
-Embedding methods need training triples. The three profession RDF graphs are used for project checking, while the BIM Spatial Models dataset is used for training examples.
+Embedding methods need training triples. The three profession RDF graphs and the BIM Spatial Models dataset have different roles.
+
+```text
+The three profession RDF graphs are the project input checked by the program.
+The BIM Spatial Models dataset is a separate public training dataset.
+```
+
+The public training dataset and the three profession IFC files do not contain the same exact building objects. Because of that, the model is trained on element-type patterns, not on exact object IDs.
+
+Example:
+
+```text
+Door partially_embedded Wall
+Service_Element partially_embedded Beam
+Window face_overlap Wall
+```
+
+This means the model learns general type patterns such as "doors are often embedded in walls" and "service elements can be embedded in beams or walls." The project RDF graphs are then used to check the actual objects and actual bounding-box overlaps in the architecture, structure, and MEP files.
 
 Training data should contain many coordinated building graphs where the correct relations are already known.
 
@@ -413,9 +430,9 @@ Graph patches approved by BIM coordinators
 
 Federated model means a project model assembled from separate discipline models. For example, the architectural model, structural model, and MEP model are linked but not necessarily stored as one original file.
 
-### 2.1 Dataset Creation Blueprint
+### 2.1 Ideal Dataset Creation Blueprint
 
-The training dataset can be created from complete or manually validated BIM models.
+An ideal training dataset for this problem would come from complete or manually validated BIM models from coordinated projects.
 
 The process is:
 
@@ -449,7 +466,9 @@ Corrupted training graph:
 
 The model receives the corrupted graph as input and tries to recover the deleted facts. The original complete graph is then used to check whether the model recovered the correct answer.
 
-This setup matches the real problem because the graph can be incomplete while the missing relation may still be true.
+This setup describes the strongest research version of the dataset. It is included because the assignment asks what data could be used to train a model.
+
+The implementation in this project uses the available public BIM Spatial Models dataset instead. That dataset gives spatial relationship labels, but it is not the same project as the three architecture, structure, and MEP IFC files.
 
 ### 2.2 Positive And Negative Samples
 
@@ -524,9 +543,9 @@ Bounding-box containment links from lbd:containsInBoundingBox
 Subelement links from bot:hasSubElement
 ```
 
-### 2.4 How The Downloaded Dataset Helps
+### 2.4 How The Downloaded Dataset Is Used
 
-The downloaded BIM Spatial Models dataset helps because it already contains spatial relationship labels.
+The downloaded BIM Spatial Models dataset is used because it already contains spatial relationship labels.
 
 The important file is:
 
@@ -595,8 +614,8 @@ For the project graphs, geometry is checked directly from RDF bounding boxes. Th
 In short:
 
 ```text
-The dataset teaches type-level spatial patterns.
-The project RDF graphs provide the actual geometry overlaps to check.
+The public dataset teaches type-level spatial patterns.
+The project RDF graphs provide the actual objects and actual bounding-box overlaps to check.
 ```
 
 ## 3. Existing Methods
