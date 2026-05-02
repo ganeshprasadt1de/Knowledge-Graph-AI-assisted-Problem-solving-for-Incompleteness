@@ -28,7 +28,7 @@ graphs/professions/str_lbd.ttl
 graphs/professions/mep_lbd.ttl
 ```
 
-The API demonstrates the coordination-link problem on architecture, structure, and MEP IFC-derived graphs. It supports cross-discipline candidates such as architectural wall to structural wall `sameAs`, MEP element `penetrates` structural element, and MEP element `requiresOpeningIn` structural element.
+The API handles architecture, structure, and MEP IFC-derived graphs. It supports cross-discipline candidates such as architectural wall to structural wall `sameAs`, MEP element `penetrates` structural element, and MEP element `requiresOpeningIn` structural element.
 
 ## 2. Install Dependencies
 
@@ -75,7 +75,7 @@ Example MCP client configuration:
 }
 ```
 
-Use the absolute folder path that matches the local machine when copying this configuration into an MCP client.
+Set the folder path to the local project path when copying this configuration into an MCP client.
 
 ## 4. MCP Tools
 
@@ -393,12 +393,12 @@ dataset_support_count
 ```text
 direct = the same type pattern exists in the training dataset
 backoff = a related but more general type pattern exists
-none = no useful type pattern was found
+none = no matching type pattern was found
 ```
 
 ## 5. Local API Calls Without An MCP Client
 
-The local caller uses the same backend functions as the MCP tools. It is useful for testing.
+The local caller uses the same backend functions as the MCP tools.
 
 Inspect the graph:
 
@@ -441,7 +441,7 @@ TransE, RotatE, and ComplEx are available in the training API:
 --method ComplEx
 ```
 
-The training script uses public BIM spatial relationship data. The current dataset contains these relation labels:
+The training script uses public BIM spatial relationship data. The dataset contains these relation labels:
 
 ```text
 partially_embedded
@@ -459,7 +459,7 @@ embedding score from the trained public dataset model
 dataset support from the training triples
 ```
 
-## 7. Current Scoring Method
+## 7. Scoring Method
 
 The report first uses geometry rules to create candidate links.
 

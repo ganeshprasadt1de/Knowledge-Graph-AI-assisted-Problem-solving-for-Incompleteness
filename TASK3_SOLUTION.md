@@ -17,7 +17,7 @@ The selected problem is:
 Predicting missing host and penetration links for openings, doors, windows, and service elements in an IFC-derived building knowledge graph.
 ```
 
-This is more complex than predicting room functions because it deals with coordination between building elements. In a real design workflow, an architect may receive a BIM model where the geometry exists, but some semantic links are missing.
+In a real design workflow, an architect may receive a BIM model where the geometry exists, but some semantic links are missing.
 
 The implementation uses three profession-specific IFC files:
 
@@ -133,7 +133,7 @@ If a fact is missing from the graph, the fact is not automatically false.
 The graph may simply be incomplete.
 ```
 
-For example, if the graph does not state that `Opening_01` voids `Wall_05`, this does not prove that the opening does not void the wall. It only means the graph does not currently contain that fact.
+For example, if the graph does not state that `Opening_01` voids `Wall_05`, this does not prove that the opening does not void the wall. It only means the graph does not contain that fact.
 
 ### 1.1 Input
 
@@ -180,7 +180,7 @@ The observed graphs contain bounding-box relations such as:
 lbd:containsInBoundingBox
 ```
 
-A bounding box is a simple rectangular 3D box around an object. It is useful for checking whether two objects are near each other or overlap.
+A bounding box is a simple rectangular 3D box around an object. It supports checks for whether two objects are near each other or overlap.
 
 ### 1.2 Output
 
@@ -396,11 +396,11 @@ The patch should be reviewed before insertion into the project graph.
 
 ## 2. Training Data
 
-A reliable machine learning model requires training data. The current three profession RDF graphs are useful as one coordinated project example, but they are not enough by themselves for training TransE, RotatE, or ComplEx in a meaningful way.
+Embedding methods need training triples. The three profession RDF graphs are used for project checking, while the BIM Spatial Models dataset is used for training examples.
 
 Training data should contain many coordinated building graphs where the correct relations are already known.
 
-Useful training sources:
+Training sources:
 
 ```text
 Federated IFC models from architecture, structure, and MEP coordination workflows
@@ -449,7 +449,7 @@ Corrupted training graph:
 
 The model receives the corrupted graph as input and tries to recover the deleted facts. The original complete graph is then used to check whether the model recovered the correct answer.
 
-This setup matches the real problem: the building graph is useful, but some coordination links are missing.
+This setup matches the real problem because the graph can be incomplete while the missing relation may still be true.
 
 ### 2.2 Positive And Negative Samples
 
@@ -496,7 +496,7 @@ These examples are not added as real building facts. They are training examples 
 
 ### 2.3 Features From The RDF Graph
 
-Useful features include:
+Training features include:
 
 ```text
 Element type
@@ -748,7 +748,7 @@ RotatE represents relations as rotations in complex vector space.
 
 Complex vector space means the vectors use complex numbers. A complex number has a real part and an imaginary part. The practical idea is that a relation rotates one entity vector toward another.
 
-RotatE is useful when relations have patterns such as inverse relations and composition.
+RotatE can model relation patterns such as inverse relations and composition.
 
 Inverse relation example:
 
@@ -803,12 +803,12 @@ The method is suitable when relation direction and inverse patterns matter.
 Main limitation:
 
 ```text
-RotatE still depends on training examples. It cannot learn reliable coordination patterns from one small set of profession graphs.
+RotatE depends on training examples. Without enough examples, its scores are weak.
 ```
 
 ### 3.4 Method 3: ComplEx
 
-ComplEx uses complex-valued embeddings and is useful for directional relations.
+ComplEx uses complex-valued embeddings and can model directional relations.
 
 Directional relation means the order of subject and object matters.
 
@@ -900,7 +900,7 @@ lbd:x-min / x-max / y-min / y-max / z-min / z-max
 
 ### 4.1 Scenario A: Graph Data Only, No Geometry
 
-This is the blindfold case. The graph still contains semantic facts, but the program has no physical position, size, or shape data.
+With graph data only, the graph still contains semantic facts, but the program has no physical position, size, or shape data.
 
 Example:
 
@@ -930,7 +930,7 @@ This creates uncertainty.
 
 ### 4.2 Scenario B: Geometry Only, No Graph Semantics
 
-This is the amnesia case. The program still sees shapes, bounding boxes, and intersections, but it no longer knows the meaning of the objects.
+With geometry only, the program still sees shapes, bounding boxes, and intersections, but it no longer knows the meaning of the objects.
 
 Example:
 
@@ -998,7 +998,7 @@ Graph semantics are needed to understand whether the intersecting objects are wa
 
 ## 5. Practical Scope
 
-A rule-based prototype can be built with the generated RDF graph.
+Geometry rules can create candidate links from the generated RDF graph.
 
 Example rule:
 
@@ -1008,7 +1008,7 @@ If an IfcOpeningElement has a bounding box contained in a Wall bounding box, pro
 
 A machine learning version using TransE, RotatE, or ComplEx requires a larger dataset.
 
-The current implementation uses the downloaded BIM Spatial Models dataset for embedding training. The training script is:
+The implementation uses the downloaded BIM Spatial Models dataset for embedding training. The training script is:
 
 ```text
 scripts/embedding_training.py
@@ -1051,9 +1051,9 @@ outputs/coordination_report.txt
 outputs/coordination_report.json
 ```
 
-This is stronger than training only from the three project RDF graphs because the embedding model now learns from a separate public BIM spatial dataset. It is still a ranked review list, not an automatic construction decision.
+The report is a ranked review list, not an automatic construction decision.
 
-The current graph is suitable for:
+The project data supports:
 
 ```text
 Problem definition
@@ -1063,10 +1063,10 @@ Candidate generation
 Coordination report generation
 ```
 
-The current data is not sufficient for:
+The project data does not support:
 
 ```text
 Guaranteeing that every predicted problem is correct
 Replacing BIM coordinator or structural engineer review
-Claiming accuracy on unseen buildings
+Guaranteeing accuracy on unseen buildings
 ```

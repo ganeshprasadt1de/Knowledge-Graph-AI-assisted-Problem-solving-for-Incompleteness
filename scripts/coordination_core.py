@@ -360,8 +360,8 @@ def _embedding_not_trained(method: str) -> dict[str, Any]:
         "status": "not_trained",
         "message": (
             f"{method} requires trained entity and relation embeddings. "
-            "The current project has a small set of profession RDF graphs, which is enough for candidate generation "
-            "but not enough for a defensible trained embedding model."
+            "The profession RDF graphs support candidate generation. A trained embedding model requires "
+            "a separate set of validated training triples."
         ),
     }
 
