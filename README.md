@@ -361,19 +361,3 @@ notepad .\outputs\coordination_report.txt
 
 This opens the readable coordination report.
 
-## 10. Excluded Or Local-Only Files
-
-The following paths are large or generated and should normally stay out of version control:
-
-```text
-tools/IFCtoLBD-master/
-jdk-21.0.10+7/
-graphs/
-datasets/
-models/
-outputs/
-*.zip
-*.ifc
-```
-
-The RDF files can be regenerated from the IFC files and converter commands above. The dataset ZIP, extracted dataset folder, and trained model are local files because they are large or generated.

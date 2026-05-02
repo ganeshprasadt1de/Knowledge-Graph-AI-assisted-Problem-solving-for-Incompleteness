@@ -524,6 +524,81 @@ Bounding-box containment links from lbd:containsInBoundingBox
 Subelement links from bot:hasSubElement
 ```
 
+### 2.4 How The Downloaded Dataset Helps
+
+The downloaded BIM Spatial Models dataset helps because it already contains spatial relationship labels.
+
+The important file is:
+
+```text
+spatial_relationships_detailed.csv
+```
+
+Each row gives two building objects and one spatial relationship.
+
+Example:
+
+```text
+name1, name2, relation
+Door object, Wall object, Partially Embedded
+```
+
+The program does not discover this relation from raw dataset geometry. The dataset already provides the relation label. The program uses that label as training data.
+
+Training label means the answer used to teach the model.
+
+The program simplifies the object names into object types.
+
+Example:
+
+```text
+M_Single-Flush:0915 x 2134mm:154820:1 -> Door
+Interior Wall:153506 -> Wall
+Partially Embedded -> partially_embedded
+```
+
+The training triple becomes:
+
+```text
+Door partially_embedded Wall
+```
+
+This teaches the model that a door can be partially embedded in a wall.
+
+The same idea is used for other rows.
+
+Example:
+
+```text
+Window face_overlap Wall
+Service_Element partially_embedded Beam
+```
+
+The program also creates negative triples by replacing the object type.
+
+Example positive triple:
+
+```text
+Window face_overlap Wall
+```
+
+Example negative triple:
+
+```text
+Window face_overlap Slab
+```
+
+This teaches the model that some type relationships are more likely than others.
+
+For the project graphs, geometry is checked directly from RDF bounding boxes. This is different from the training dataset step.
+
+In short:
+
+```text
+The dataset teaches type-level spatial patterns.
+The project RDF graphs provide the actual geometry overlaps to check.
+```
+
 ## 3. Existing Methods
 
 The three selected methods are knowledge graph embedding methods:
