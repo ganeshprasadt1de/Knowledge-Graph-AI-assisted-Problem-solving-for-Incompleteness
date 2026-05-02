@@ -1,0 +1,174 @@
+{
+  "method": "ComplEx",
+  "status": "trained_on_synthetic_data",
+  "training_triples": [
+    [
+      "Duct_22",
+      "requiresOpeningIn",
+      "Struct_Wall_57"
+    ],
+    [
+      "Arch_Wall_101",
+      "sameAs",
+      "Struct_Wall_57"
+    ],
+    [
+      "Duct_22",
+      "penetrates",
+      "Struct_Wall_57"
+    ],
+    [
+      "Pipe_14",
+      "penetrates",
+      "Struct_Wall_58"
+    ],
+    [
+      "Pipe_14",
+      "requiresOpeningIn",
+      "Struct_Wall_58"
+    ],
+    [
+      "Arch_Wall_103",
+      "sameAs",
+      "Struct_Wall_59"
+    ],
+    [
+      "Duct_23",
+      "requiresOpeningIn",
+      "Struct_Beam_12"
+    ],
+    [
+      "Duct_23",
+      "penetrates",
+      "Struct_Beam_12"
+    ],
+    [
+      "Arch_Wall_102",
+      "sameAs",
+      "Struct_Wall_58"
+    ]
+  ],
+  "demo_target_triples": [
+    [
+      "Arch_Wall_101",
+      "sameAs",
+      "Struct_Wall_57"
+    ],
+    [
+      "Duct_22",
+      "penetrates",
+      "Struct_Wall_57"
+    ],
+    [
+      "Duct_22",
+      "requiresOpeningIn",
+      "Struct_Wall_57"
+    ]
+  ],
+  "negative_candidates": [
+    [
+      "Arch_Wall_101",
+      "sameAs",
+      "Struct_Wall_59"
+    ],
+    [
+      "Duct_22",
+      "penetrates",
+      "Struct_Beam_12"
+    ],
+    [
+      "Duct_22",
+      "requiresOpeningIn",
+      "Struct_Wall_58"
+    ],
+    [
+      "Pipe_14",
+      "penetrates",
+      "Chair_01"
+    ],
+    [
+      "Window_08",
+      "sameAs",
+      "Struct_Beam_12"
+    ]
+  ],
+  "entity_count": 12,
+  "relation_count": 3,
+  "embedding_dimension": 24,
+  "epochs": 350,
+  "predictions": [
+    {
+      "triple": [
+        "Duct_22",
+        "penetrates",
+        "Struct_Wall_57"
+      ],
+      "score": 0.985,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Duct_22",
+        "requiresOpeningIn",
+        "Struct_Wall_57"
+      ],
+      "score": 0.984,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Arch_Wall_101",
+        "sameAs",
+        "Struct_Wall_57"
+      ],
+      "score": 0.963,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Window_08",
+        "sameAs",
+        "Struct_Beam_12"
+      ],
+      "score": 0.494,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Duct_22",
+        "penetrates",
+        "Struct_Beam_12"
+      ],
+      "score": 0.173,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Arch_Wall_101",
+        "sameAs",
+        "Struct_Wall_59"
+      ],
+      "score": 0.119,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Duct_22",
+        "requiresOpeningIn",
+        "Struct_Wall_58"
+      ],
+      "score": 0.068,
+      "source": "synthetic_complex_demo"
+    },
+    {
+      "triple": [
+        "Pipe_14",
+        "penetrates",
+        "Chair_01"
+      ],
+      "score": 0.032,
+      "source": "synthetic_complex_demo"
+    }
+  ],
+  "note": "This demo proves the ComplEx workflow on artificial data. It is not trained on the real IFC-derived RDF graphs and is not an evaluation of generalization."
+}

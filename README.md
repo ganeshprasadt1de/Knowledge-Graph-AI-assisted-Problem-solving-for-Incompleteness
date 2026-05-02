@@ -142,6 +142,14 @@ Test the same backend locally:
 python .\scripts\call_api.py find-cross-links .\graphs\professions\arc_lbd.ttl .\graphs\professions\str_lbd.ttl .\graphs\professions\mep_lbd.ttl --limit 5
 ```
 
+Run the artificial ComplEx training demo:
+
+```powershell
+python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_complex_predictions.json
+```
+
+This command uses synthetic triples from the script, not the real IFC-derived RDF graphs.
+
 ## 7. Excluded Or Local-Only Files
 
 The following files and folders are large or generated and should normally stay out of version control:

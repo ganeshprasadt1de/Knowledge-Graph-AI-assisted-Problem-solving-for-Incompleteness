@@ -933,6 +933,28 @@ If an IfcOpeningElement has a bounding box contained in a Wall bounding box, pro
 
 A machine learning version using TransE, RotatE, or ComplEx requires a larger dataset.
 
+A separate synthetic ComplEx demo is included in:
+
+```text
+scripts/synthetic_complex_demo.py
+```
+
+This script creates artificial training triples such as:
+
+```text
+(Arch_Wall_101, sameAs, Struct_Wall_57)
+(Duct_22, penetrates, Struct_Wall_57)
+(Duct_22, requiresOpeningIn, Struct_Wall_57)
+```
+
+It trains a small ComplEx-style embedding model on those artificial triples and writes:
+
+```text
+outputs/05_synthetic_complex_predictions.json
+```
+
+This is useful for demonstrating how ComplEx produces plausibility scores. It is not evidence that the real IFC-derived RDF graphs were used to train a reliable ComplEx model.
+
 The current graph is suitable for:
 
 ```text

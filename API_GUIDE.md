@@ -348,6 +348,22 @@ Expected output:
 }
 ```
 
+Run the synthetic ComplEx training demo:
+
+```powershell
+python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_complex_predictions.json
+```
+
+Expected top predictions:
+
+```text
+(Duct_22, penetrates, Struct_Wall_57): 0.985
+(Duct_22, requiresOpeningIn, Struct_Wall_57): 0.984
+(Arch_Wall_101, sameAs, Struct_Wall_57): 0.963
+```
+
+This output is trained on artificial triples created inside `scripts/synthetic_complex_demo.py`. It demonstrates how ComplEx scoring works, but it is not trained on the real IFC-derived RDF graphs.
+
 ## 6. Use Of TransE, RotatE, And ComplEx
 
 TransE, RotatE, and ComplEx are included as method options in the API:
@@ -382,6 +398,8 @@ method selection
 ```
 
 It is not enough to honestly train and evaluate TransE, RotatE, or ComplEx.
+
+The file `scripts/synthetic_complex_demo.py` provides a separate artificial-data demonstration for ComplEx. It creates small example triples, trains embeddings with negative sampling, and writes ranked predictions to `outputs/05_synthetic_complex_predictions.json`.
 
 ## 7. Current Scoring Method
 
