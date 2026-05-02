@@ -11,6 +11,7 @@ from coordination_core import (
     inspect_profession_graphs as inspect_profession_graphs_backend,
     score_candidate_triple as score_candidate_triple_backend,
 )
+from complex_profession_demo import run_complex_profession_demo
 
 
 mcp = FastMCP("building-coordination-kg")
@@ -87,6 +88,16 @@ def explain_candidate_link(
 def export_rdf_patch_tool(predictions: list[dict], threshold: float = 0.8) -> str:
     """Serialize high-scoring predictions as a Turtle patch."""
     return export_rdf_patch(predictions, threshold)
+
+
+@mcp.tool()
+def train_complex_on_profession_graphs(
+    output_json: str = "outputs/05_complex_profession_predictions.json",
+    output_text: str = "outputs/00_final_demo_output.txt",
+    limit: int = 300,
+) -> dict:
+    """Train the ComplEx example on pseudo-labels from the three profession RDF graphs."""
+    return run_complex_profession_demo(output_json, output_text, limit)
 
 
 if __name__ == "__main__":

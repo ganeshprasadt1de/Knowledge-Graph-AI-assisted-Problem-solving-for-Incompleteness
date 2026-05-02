@@ -1,0 +1,179 @@
+{
+  "method": "ComplEx",
+  "status": "trained_on_pseudo_labels_from_profession_graphs",
+  "positive_training_triples": 39,
+  "negative_training_triples": 37,
+  "source_graphs": [
+    "graphs/professions/arc_lbd.ttl",
+    "graphs/professions/str_lbd.ttl",
+    "graphs/professions/mep_lbd.ttl"
+  ],
+  "source_candidate_count": 260,
+  "embedding_dimension": 32,
+  "epochs": 220,
+  "output_json": "outputs\\05_complex_profession_predictions.json",
+  "output_text": "outputs\\00_final_demo_output.txt",
+  "predictions": [
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_01"
+      ],
+      "score": 1.0
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_02"
+      ],
+      "score": 1.0
+    },
+    {
+      "triple": [
+        "MEP_DuctFitting_01",
+        "penetrates",
+        "Structural_Beam_03"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_04"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_05"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_06"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_07"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_02",
+        "penetrates",
+        "Structural_Beam_08"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctFitting_01",
+        "requiresOpeningIn",
+        "Structural_Beam_03"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_01"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_02"
+      ],
+      "score": 0.999
+    },
+    {
+      "triple": [
+        "MEP_DuctFitting_02",
+        "penetrates",
+        "Structural_Beam_02"
+      ],
+      "score": 0.997
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_03",
+        "penetrates",
+        "Structural_Beam_08"
+      ],
+      "score": 0.997
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_05"
+      ],
+      "score": 0.994
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_06"
+      ],
+      "score": 0.994
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_07"
+      ],
+      "score": 0.994
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_01",
+        "requiresOpeningIn",
+        "Structural_Beam_04"
+      ],
+      "score": 0.993
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_02",
+        "requiresOpeningIn",
+        "Structural_Beam_08"
+      ],
+      "score": 0.992
+    },
+    {
+      "triple": [
+        "MEP_DuctSegment_04",
+        "penetrates",
+        "Structural_Beam_09"
+      ],
+      "score": 0.99
+    },
+    {
+      "triple": [
+        "MEP_DuctFitting_02",
+        "requiresOpeningIn",
+        "Structural_Beam_02"
+      ],
+      "score": 0.987
+    }
+  ],
+  "note": "Training labels are generated from geometry/type rules on the three RDF graphs. They are pseudo-labels, not manually verified ground truth."
+}

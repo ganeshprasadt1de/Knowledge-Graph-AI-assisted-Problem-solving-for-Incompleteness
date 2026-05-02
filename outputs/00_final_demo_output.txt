@@ -1,8 +1,8 @@
 Predicted missing facts
 
-(Duct_22, penetrates, Struct_Wall_57): 0.985
-(Duct_22, requiresOpeningIn, Struct_Wall_57): 0.984
-(Arch_Wall_101, sameAs, Struct_Wall_57): 0.963
+(MEP_DuctSegment_01, penetrates, Structural_Beam_01): 1.0
+(MEP_DuctSegment_01, penetrates, Structural_Beam_02): 1.0
+(MEP_DuctFitting_01, penetrates, Structural_Beam_03): 0.999
 
 Interpretation
 

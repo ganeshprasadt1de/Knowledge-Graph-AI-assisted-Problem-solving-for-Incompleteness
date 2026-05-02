@@ -13,6 +13,7 @@ from coordination_core import (
     inspect_profession_graphs,
     score_candidate_triple,
 )
+from complex_profession_demo import run_complex_profession_demo
 
 
 def write_json(data) -> None:
@@ -73,6 +74,11 @@ def main() -> None:
     patch_parser.add_argument("predictions_json", type=Path)
     patch_parser.add_argument("--threshold", type=float, default=0.8)
 
+    complex_parser = subparsers.add_parser("complex-profession-demo")
+    complex_parser.add_argument("--output-json", type=Path, default=Path("outputs/05_complex_profession_predictions.json"))
+    complex_parser.add_argument("--output-text", type=Path, default=Path("outputs/00_final_demo_output.txt"))
+    complex_parser.add_argument("--limit", type=int, default=300)
+
     args = parser.parse_args()
 
     if args.command == "inspect":
@@ -106,6 +112,8 @@ def main() -> None:
     elif args.command == "export-patch":
         predictions = json.loads(args.predictions_json.read_text(encoding="utf-8"))
         print(export_rdf_patch(predictions, args.threshold))
+    elif args.command == "complex-profession-demo":
+        write_json(run_complex_profession_demo(args.output_json, args.output_text, args.limit))
 
 
 if __name__ == "__main__":

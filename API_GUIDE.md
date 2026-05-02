@@ -43,9 +43,11 @@ The dependencies are:
 ```text
 rdflib
 mcp
+numpy
 ```
 
 `rdflib` parses the Turtle RDF graph. `mcp` provides the Model Context Protocol server runtime.
+`numpy` is used by the small ComplEx training example.
 
 ## 3. MCP Server
 
@@ -315,6 +317,38 @@ Example output:
 <https://example.org/professions/arc/window_example> <https://example.org/coordination#isHostedBy> <https://example.org/professions/arc/wall_example> .
 ```
 
+### 4.8 `train_complex_on_profession_graphs`
+
+Purpose:
+
+```text
+Create pseudo-labels from the three profession RDF graphs, train the ComplEx example, and write the final output files.
+```
+
+Pseudo-label means an automatically generated training label. Here, the labels come from geometry/type rules applied to the actual architecture, structure, and MEP RDF graphs.
+
+Arguments:
+
+```json
+{
+  "output_json": "outputs/05_complex_profession_predictions.json",
+  "output_text": "outputs/00_final_demo_output.txt",
+  "limit": 300
+}
+```
+
+Example output:
+
+```json
+{
+  "method": "ComplEx",
+  "status": "trained_on_pseudo_labels_from_profession_graphs",
+  "positive_training_triples": 39,
+  "negative_training_triples": 37,
+  "output_text": "outputs/00_final_demo_output.txt"
+}
+```
+
 ## 5. Local API Calls Without An MCP Client
 
 The local caller uses the same backend functions as the MCP tools. It is useful for testing.
@@ -348,21 +382,21 @@ Expected output:
 }
 ```
 
-Run the synthetic ComplEx training demo:
+Run the ComplEx profession-graph example:
 
 ```powershell
-python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_complex_predictions.json
+python .\scripts\call_api.py complex-profession-demo --output-json .\outputs\05_complex_profession_predictions.json --output-text .\outputs\00_final_demo_output.txt
 ```
 
-Expected top predictions:
+Example top predictions:
 
 ```text
-(Duct_22, penetrates, Struct_Wall_57): 0.985
-(Duct_22, requiresOpeningIn, Struct_Wall_57): 0.984
-(Arch_Wall_101, sameAs, Struct_Wall_57): 0.963
+(MEP_DuctSegment_01, penetrates, Structural_Beam_01): 1.0
+(MEP_DuctSegment_01, penetrates, Structural_Beam_02): 1.0
+(MEP_DuctFitting_01, penetrates, Structural_Beam_03): 0.999
 ```
 
-This output is trained on artificial triples created inside `scripts/synthetic_complex_demo.py`. It demonstrates how ComplEx scoring works, but it is not trained on the real IFC-derived RDF graphs.
+This output is based on pseudo-labels generated from the actual architecture, structure, and MEP RDF graphs. The pseudo-labels come from geometry/type rules, not from manually verified ground truth.
 
 Create abstract presentation outputs:
 
@@ -383,7 +417,7 @@ The abstract JSON files use readable element names instead of raw RDF IRIs.
 
 ## 6. Use Of TransE, RotatE, And ComplEx
 
-TransE, RotatE, and ComplEx are included as method options in the API:
+TransE, RotatE, and ComplEx are included as method options in the candidate-search API:
 
 ```text
 method = "TransE"
@@ -391,7 +425,7 @@ method = "RotatE"
 method = "ComplEx"
 ```
 
-They are not used to produce final scores in this project because no trained embedding model is available.
+The normal candidate-search endpoint returns `not_trained` for these methods because that endpoint is reserved for a defensible trained model.
 
 This is a data limitation, not an API limitation. These methods require:
 
@@ -414,9 +448,9 @@ rule-based scoring
 method selection
 ```
 
-It is not enough to honestly train and evaluate TransE, RotatE, or ComplEx.
+It is not enough to honestly train and evaluate TransE, RotatE, or ComplEx as general models for unseen buildings.
 
-The file `scripts/synthetic_complex_demo.py` provides a separate artificial-data demonstration for ComplEx. It creates small example triples, trains embeddings with negative sampling, and writes ranked predictions to `outputs/05_synthetic_complex_predictions.json`.
+The file `scripts/complex_profession_demo.py` provides a small ComplEx-style example over the profession RDF graphs. It creates pseudo-labels from geometry/type rules, trains embeddings with negative samples, and writes ranked predictions to `outputs/05_complex_profession_predictions.json`.
 
 ## 7. Current Scoring Method
 

@@ -15,6 +15,8 @@ MEP_GRAPH = ROOT / "graphs" / "professions" / "mep_lbd.ttl"
 
 
 def short_name(uri: str, counters: dict[str, int], mapping: dict[str, str]) -> str:
+    if "://" not in uri:
+        return uri
     if uri in mapping:
         return mapping[uri]
 
@@ -87,13 +89,17 @@ def abstract_inspection(data: dict, target: Path) -> None:
 
 def final_text(complex_source: Path, target: Path) -> None:
     data = json.loads(complex_source.read_text(encoding="utf-8-sig"))
+    counters: dict[str, int] = {}
+    mapping: dict[str, str] = {}
     lines = [
         "Predicted missing facts",
         "",
     ]
     for item in data["predictions"][:3]:
         head, relation, tail = item["triple"]
-        lines.append(f"({head}, {relation}, {tail}): {item['score']}")
+        head_name = short_name(head, counters, mapping)
+        tail_name = short_name(tail, counters, mapping)
+        lines.append(f"({head_name}, {relation}, {tail_name}): {item['score']}")
 
     lines.extend(
         [
@@ -115,6 +121,26 @@ def final_text(complex_source: Path, target: Path) -> None:
         ]
     )
     target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def complex_status(complex_source: Path, target: Path) -> None:
+    data = json.loads(complex_source.read_text(encoding="utf-8-sig"))
+    status = {
+        "normal_candidate_search_method": {
+            "method": "ComplEx",
+            "status": "not_trained",
+            "meaning": "The normal API method option is reserved for a defensible model trained on many verified building graphs.",
+        },
+        "profession_graph_example": {
+            "method": "ComplEx",
+            "status": data["status"],
+            "positive_training_triples": data["positive_training_triples"],
+            "negative_training_triples": data["negative_training_triples"],
+            "source_graphs": data["source_graphs"],
+            "meaning": "This example trains on pseudo-labels generated from the three profession RDF graphs.",
+        },
+    }
+    target.write_text(json.dumps(status, indent=2), encoding="utf-8")
 
 
 def main() -> None:
@@ -148,8 +174,12 @@ def main() -> None:
         OUTPUT_DIR / "03_sameas_candidates_abstract.json",
     )
     final_text(
-        OUTPUT_DIR / "05_synthetic_complex_predictions.json",
+        OUTPUT_DIR / "05_complex_profession_predictions.json",
         OUTPUT_DIR / "00_final_demo_output.txt",
+    )
+    complex_status(
+        OUTPUT_DIR / "05_complex_profession_predictions.json",
+        OUTPUT_DIR / "04_complex_status.json",
     )
 
 

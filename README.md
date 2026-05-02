@@ -55,7 +55,7 @@ scripts/analyze_lbd_graph.py
 scripts/call_api.py
 scripts/create_final_outputs.py
 scripts/mcp_server.py
-scripts/synthetic_complex_demo.py
+scripts/complex_profession_demo.py
 ```
 
 ## 3. System Requirements
@@ -64,7 +64,7 @@ The conversion was run on Windows with PowerShell.
 
 The local OpenJDK runtime is used when Java is not available on the system PATH. Maven is not required because IFCtoLBD already includes the needed Java libraries.
 
-Python is needed for the API scripts, MCP server, graph analysis, and synthetic ComplEx example.
+Python is needed for the API scripts, MCP server, graph analysis, and ComplEx profession-graph example.
 
 Install the Python dependency:
 
@@ -156,13 +156,13 @@ Test the same backend locally:
 python .\scripts\call_api.py find-cross-links .\graphs\professions\arc_lbd.ttl .\graphs\professions\str_lbd.ttl .\graphs\professions\mep_lbd.ttl --limit 5
 ```
 
-Run the artificial ComplEx training example:
+Run the ComplEx profession-graph example:
 
 ```powershell
-python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_complex_predictions.json
+python .\scripts\call_api.py complex-profession-demo --output-json .\outputs\05_complex_profession_predictions.json --output-text .\outputs\00_final_demo_output.txt
 ```
 
-This command uses synthetic triples from the script, not the real IFC-derived RDF graphs.
+This command creates pseudo-labels from the three RDF graphs, trains a small ComplEx-style model on those pseudo-labels, and writes the final text output.
 
 Final presentation output:
 
