@@ -577,7 +577,8 @@ Preprocessing steps:
 6. Convert every triple into integer form:
    (head_entity_id, relation_id, tail_entity_id)
 7. Generate negative samples by replacing the head or tail entity.
-8. Split the triples into training, validation, and test sets.
+8. Train the embedding model on positive and negative triples.
+9. Apply the trained model to candidate triples found in the three profession RDF graphs.
 ```
 
 Example mapping:
@@ -655,7 +656,8 @@ Extract entities and relations.
 Normalize equivalent labels and classes.
 Generate candidate triples.
 Generate negative samples.
-Split triples into training, validation, and test sets.
+Train on positive and negative triples.
+Apply the trained model to the three profession RDF graphs.
 ```
 
 Alignment with this problem:
@@ -776,8 +778,9 @@ Parse RDF triples.
 Map IRIs to entity IDs.
 Map predicates to relation IDs.
 Normalize labels and duplicate concepts.
-Create train, validation, and test sets.
 Generate negative triples.
+Train on positive and negative triples.
+Apply the trained model to project candidates from the architecture, structure, and MEP RDF graphs.
 ```
 
 Alignment with this problem:
