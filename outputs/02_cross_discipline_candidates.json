@@ -1,0 +1,138 @@
+﻿{
+  "method": "rule",
+  "status": "ok",
+  "candidate_count": 260,
+  "candidates": [
+    {
+      "subject": "https://example.org/professions/mep/ductfitting_a67143fa-0884-41a0-b6e9-3c9e8fe3aba4",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_bbf8378f-8492-45a2-9f13-25c7dda76551",
+      "score": 0.666,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.395"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e9794",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e9784",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e979c",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfb9c",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_d37a79b2-7606-4800-b215-3039a7be8447",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfbc5",
+      "score": 0.654,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.366"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductsegment_a67143fa-0884-41a0-b6e9-3c9e8fe3abba",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_fd542353-5aed-4ee2-8baa-b1272d4fe72c",
+      "score": 0.641,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.335"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductfitting_90ea0414-b091-440a-904a-c6bd4ee72ab6",
+      "predicate": "penetrates",
+      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfb9c",
+      "score": 0.637,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.326"
+      ]
+    },
+    {
+      "subject": "https://example.org/professions/mep/ductfitting_a67143fa-0884-41a0-b6e9-3c9e8fe3aba4",
+      "predicate": "requiresOpeningIn",
+      "object": "https://example.org/professions/str/beam_bbf8378f-8492-45a2-9f13-25c7dda76551",
+      "score": 0.6,
+      "method": "rule",
+      "evidence": [
+        "MEP element is typed as a duct, duct fitting, or flow terminal",
+        "structure element is typed as wall, beam, column, or slab",
+        "the MEP and structure bounding boxes overlap across discipline graphs",
+        "overlap ratio against smaller bounding box: 0.395",
+        "penetration candidates usually require an opening or structural review"
+      ]
+    }
+  ]
+}

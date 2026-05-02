@@ -1,0 +1,53 @@
+﻿{
+  "architecture": {
+    "triples": 12667,
+    "subjects": 1482,
+    "predicates": 53,
+    "objects": 5756,
+    "bot_elements": 489,
+    "walls": 47,
+    "doors": 16,
+    "windows": 17,
+    "opening_elements": 35,
+    "flow_terminals": 9,
+    "furniture": 35,
+    "storeys": 6,
+    "geometry_links": 481,
+    "bounding_box_links": 3024,
+    "bot_subelement_links": 24
+  },
+  "structure": {
+    "triples": 108588,
+    "subjects": 12417,
+    "predicates": 37,
+    "objects": 29592,
+    "bot_elements": 4150,
+    "walls": 9,
+    "doors": 0,
+    "windows": 0,
+    "opening_elements": 0,
+    "flow_terminals": 0,
+    "furniture": 0,
+    "storeys": 0,
+    "geometry_links": 4133,
+    "bounding_box_links": 21447,
+    "bot_subelement_links": 0
+  },
+  "mep": {
+    "triples": 171309,
+    "subjects": 22745,
+    "predicates": 54,
+    "objects": 70384,
+    "bot_elements": 6955,
+    "walls": 133,
+    "doors": 124,
+    "windows": 0,
+    "opening_elements": 131,
+    "flow_terminals": 11,
+    "furniture": 0,
+    "storeys": 4,
+    "geometry_links": 7081,
+    "bounding_box_links": 33956,
+    "bot_subelement_links": 107
+  }
+}

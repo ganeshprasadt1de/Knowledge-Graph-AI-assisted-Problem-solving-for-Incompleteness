@@ -1,0 +1,6 @@
+﻿{
+  "method": "ComplEx",
+  "status": "not_trained",
+  "message": "ComplEx requires trained entity and relation embeddings. The current project has a small set of profession RDF graphs, which is enough for candidate generation but not enough for a defensible trained embedding model.",
+  "candidates": []
+}

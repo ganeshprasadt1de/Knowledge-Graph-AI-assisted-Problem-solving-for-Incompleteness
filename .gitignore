@@ -1,0 +1,7 @@
+IFCtoLBD-master/
+tools/IFCtoLBD-master/
+jdk-21.0.10+7/
+graphs/
+*.zip
+*.ifc
+__pycache__/
