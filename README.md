@@ -154,11 +154,22 @@ The program then creates a candidate coordination problem:
 MEP_Duct_01 penetrates Structural_Beam_01
 ```
 
-The final report score combines two parts:
+The final report score combines three parts:
 
 ```text
 geometry score from the three project RDF graphs
 embedding score from the trained public dataset model
+dataset support from the training triples
+```
+
+`dataset support` means how much evidence the training dataset has for the same type of relationship.
+
+Example:
+
+```text
+direct = the same type pattern exists in the training dataset
+backoff = a related but more general type pattern exists
+none = no useful type pattern was found
 ```
 
 The report is a ranked review list. It is not an automatic construction decision.
@@ -276,7 +287,81 @@ outputs/coordination_report.txt
 outputs/coordination_report.json
 ```
 
-## 9. Excluded Or Local-Only Files
+## 9. Execution Commands
+
+Install Python dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+This installs the Python packages used for RDF parsing, MCP tools, and embedding training.
+
+Convert the architecture IFC model to RDF:
+
+```powershell
+.\jdk-21.0.10+7\bin\java.exe -Xmx6g -cp ".\tools\IFCtoLBD-master\IFCtoLBD_NodeJS\java_libraries\*" org.linkedbuildingdata.ifc2lbd.IFCtoLBDConverter_CLI ".\ifc files from different professions\Ifc4_Revit_ARC.ifc" -t ".\graphs\professions\arc_lbd.ttl" -u "https://example.org/professions/arc/" -be=true -p=true --hasUnits=true --hasGeometry=true
+```
+
+This converts the architecture IFC file into an RDF graph.
+
+Convert the structural IFC model to RDF:
+
+```powershell
+.\jdk-21.0.10+7\bin\java.exe -Xmx6g -cp ".\tools\IFCtoLBD-master\IFCtoLBD_NodeJS\java_libraries\*" org.linkedbuildingdata.ifc2lbd.IFCtoLBDConverter_CLI ".\ifc files from different professions\Ifc4_Revit_STR.ifc" -t ".\graphs\professions\str_lbd.ttl" -u "https://example.org/professions/str/" -be=true -p=true --hasUnits=true --hasGeometry=true
+```
+
+This converts the structural IFC file into an RDF graph.
+
+Convert the MEP IFC model to RDF:
+
+```powershell
+.\jdk-21.0.10+7\bin\java.exe -Xmx6g -cp ".\tools\IFCtoLBD-master\IFCtoLBD_NodeJS\java_libraries\*" org.linkedbuildingdata.ifc2lbd.IFCtoLBDConverter_CLI ".\ifc files from different professions\Ifc4_Revit_MEP.ifc" -t ".\graphs\professions\mep_lbd.ttl" -u "https://example.org/professions/mep/" -be=true -p=true --hasUnits=true --hasGeometry=true
+```
+
+This converts the MEP IFC file into an RDF graph.
+
+Inspect the three RDF graphs:
+
+```powershell
+python .\scripts\call_api.py inspect-professions .\graphs\professions\arc_lbd.ttl .\graphs\professions\str_lbd.ttl .\graphs\professions\mep_lbd.ttl
+```
+
+This checks what data exists in the architecture, structure, and MEP RDF graphs.
+
+Train the ComplEx embedding model:
+
+```powershell
+python .\scripts\call_api.py train-embedding --dataset ".\datasets\BIM Spatial Models for Construction Dependency Inf" --method ComplEx --output-model ".\models\bim_spatial_complex_model.json"
+```
+
+This trains ComplEx using positive and negative triples from the BIM spatial relationship dataset.
+
+Create the coordination report:
+
+```powershell
+python .\scripts\call_api.py coordination-report .\graphs\professions\arc_lbd.ttl .\graphs\professions\str_lbd.ttl .\graphs\professions\mep_lbd.ttl --model .\models\bim_spatial_complex_model.json --output-text .\outputs\coordination_report.txt --output-json .\outputs\coordination_report.json
+```
+
+This finds overlaps in the three RDF graphs, scores them with the trained model, and writes the report.
+
+Start the MCP server:
+
+```powershell
+python .\scripts\mcp_server.py
+```
+
+This starts the MCP server so an agent can call the graph inspection, training, and report tools.
+
+Open the text report:
+
+```powershell
+notepad .\outputs\coordination_report.txt
+```
+
+This opens the readable coordination report.
+
+## 10. Excluded Or Local-Only Files
 
 The following paths are large or generated and should normally stay out of version control:
 

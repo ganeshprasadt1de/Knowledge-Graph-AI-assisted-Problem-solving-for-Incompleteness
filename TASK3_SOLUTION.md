@@ -19,7 +19,7 @@ Predicting missing host and penetration links for openings, doors, windows, and 
 
 This is more complex than predicting room functions because it deals with coordination between building elements. In a real design workflow, an architect may receive a BIM model where the geometry exists, but some semantic links are missing.
 
-The implemented demo uses three profession-specific IFC files:
+The implementation uses three profession-specific IFC files:
 
 ```text
 ifc files from different professions/Ifc4_Revit_ARC.ifc
@@ -35,7 +35,7 @@ graphs/professions/str_lbd.ttl
 graphs/professions/mep_lbd.ttl
 ```
 
-This makes the demo faithful to the multi-discipline coordination problem. The system can now compare architectural, structural, and MEP graph data and propose missing cross-discipline links such as:
+This matches the multi-discipline coordination problem. The system can compare architectural, structural, and MEP graph data and propose missing cross-discipline links such as:
 
 ```text
 Architectural wall sameAs Structural wall
@@ -235,7 +235,7 @@ API_GUIDE.md
 
 The MCP server exposes the solution as tools for an agentic AI system.
 
-MCP means Model Context Protocol. In this context, it is a way for an AI agent to call external tools.
+MCP means Model Context Protocol. In this context, it is a way for an AI agent to call external tools. Agentic AI means an AI system that can call tools and perform several steps instead of only writing text.
 
 Implemented API:
 

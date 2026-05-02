@@ -120,6 +120,25 @@ def make_ids(triples: list[tuple[str, str, str]]) -> tuple[dict[str, int], dict[
     }
 
 
+def type_pattern_key(head: str, relation: str, tail: str) -> str:
+    head_type = head.split(":", 1)[-1]
+    tail_type = tail.split(":", 1)[-1]
+    return f"{head_type}|{relation}|{tail_type}"
+
+
+def build_pattern_counts(positives: list[tuple[str, str, str]]) -> dict[str, Any]:
+    pattern_counts: dict[str, int] = {}
+    relation_counts: dict[str, int] = {}
+    for head, relation, tail in positives:
+        key = type_pattern_key(head, relation, tail)
+        pattern_counts[key] = pattern_counts.get(key, 0) + 1
+        relation_counts[relation] = relation_counts.get(relation, 0) + 1
+    return {
+        "type_pattern_counts": pattern_counts,
+        "relation_counts": relation_counts,
+    }
+
+
 def train_embedding(
     positives: list[tuple[str, str, str]],
     negatives: list[tuple[str, str, str]],
@@ -281,7 +300,46 @@ def relation_for_candidate(predicate: str) -> str:
     return clean_token(predicate)
 
 
-def score_type_triple(model: dict[str, Any], head_type: str, relation: str, tail_type: str) -> float:
+def support_for_type_pattern(model: dict[str, Any], head_type: str, relation: str, tail_type: str) -> dict[str, Any]:
+    pattern_counts = model.get("type_pattern_counts", {})
+    relation_counts = model.get("relation_counts", {})
+    exact_key = f"{head_type}|{relation}|{tail_type}"
+    exact_count = int(pattern_counts.get(exact_key, 0))
+    relation_total = max(1, int(relation_counts.get(relation, 0)))
+
+    backoff_keys = [
+        f"{head_type}|{relation}|Building_Element",
+        f"Building_Element|{relation}|{tail_type}",
+    ]
+    backoff_matches = [(key, int(pattern_counts.get(key, 0))) for key in backoff_keys]
+    backoff_key, backoff_count = max(backoff_matches, key=lambda item: item[1])
+
+    if exact_count > 0:
+        level = "direct"
+        support_count = exact_count
+        support_key = exact_key
+        support_weight = 1.0
+    elif backoff_count > 0:
+        level = "backoff"
+        support_count = backoff_count
+        support_key = backoff_key
+        support_weight = 0.45
+    else:
+        level = "none"
+        support_count = 0
+        support_key = exact_key
+        support_weight = 0.0
+
+    support_score = support_weight * min(1.0, math.log1p(support_count) / math.log1p(relation_total))
+    return {
+        "support_level": level,
+        "support_count": support_count,
+        "support_pattern": support_key,
+        "support_score": round(support_score, 3),
+    }
+
+
+def score_type_triple(model: dict[str, Any], head_type: str, relation: str, tail_type: str) -> dict[str, Any]:
     entity_to_id = model["entity_to_id"]
     relation_to_id = model["relation_to_id"]
     candidates = [
@@ -294,8 +352,9 @@ def score_type_triple(model: dict[str, Any], head_type: str, relation: str, tail
         for entity in entity_to_id
         if entity.endswith(f":{tail_type}")
     ]
+    support = support_for_type_pattern(model, head_type, relation, tail_type)
     if relation not in relation_to_id or not candidates or not tails:
-        return 0.05
+        return {"embedding_score": 0.05, **support}
 
     r = relation_to_id[relation]
     scores = []
@@ -303,7 +362,7 @@ def score_type_triple(model: dict[str, Any], head_type: str, relation: str, tail
         for _, t in tails:
             raw = score_raw(model["method"], model["entity_re"], model["entity_im"], model["relation_re"], model["relation_im"], h, r, t)
             scores.append(sigmoid(raw))
-    return float(sum(scores) / len(scores))
+    return {"embedding_score": float(sum(scores) / len(scores)), **support}
 
 
 def train_from_dataset(
@@ -317,6 +376,7 @@ def train_from_dataset(
     positives = read_positive_type_triples(dataset_dir, max_rows)
     negatives = make_negative_triples(positives)
     model = train_embedding(positives, negatives, method)
+    model.update(build_pattern_counts(positives))
     model["dataset_dir"] = str(dataset_dir)
     model["training_note"] = (
         "Positive triples come from public BIM spatial relationship CSV files. "
@@ -366,28 +426,44 @@ def create_coordination_report(
         head_type = project_entity_type(item["subject"])
         tail_type = project_entity_type(item["object"])
         relation = relation_for_candidate(item["predicate"])
-        model_score = score_type_triple(model, head_type, relation, tail_type)
+        model_evidence = score_type_triple(model, head_type, relation, tail_type)
+        embedding_score = float(model_evidence["embedding_score"])
+        support_score = float(model_evidence["support_score"])
         geometry_score = float(item["score"])
-        combined = round((0.65 * geometry_score) + (0.35 * model_score), 3)
+        combined = round((0.75 * geometry_score) + (0.15 * embedding_score) + (0.10 * support_score), 3)
+        if geometry_score >= 0.6 and model_evidence["support_level"] != "none":
+            risk_level = "high"
+        elif geometry_score >= 0.55:
+            risk_level = "medium"
+        else:
+            risk_level = "low"
         report_items.append(
             {
                 "subject": abstract_name(item["subject"], counters, mapping),
                 "predicate": item["predicate"],
                 "object": abstract_name(item["object"], counters, mapping),
                 "score": combined,
+                "risk_level": risk_level,
                 "geometry_score": round(geometry_score, 3),
-                "embedding_score": round(model_score, 3),
+                "embedding_score": round(embedding_score, 3),
+                "dataset_support_level": model_evidence["support_level"],
+                "dataset_support_count": model_evidence["support_count"],
+                "dataset_support_pattern": model_evidence["support_pattern"],
+                "dataset_support_score": model_evidence["support_score"],
                 "evidence": item["evidence"],
             }
         )
 
-    report_items = sorted(report_items, key=lambda row: row["score"], reverse=True)[:limit]
+    all_report_items = sorted(report_items, key=lambda row: row["score"], reverse=True)
+    report_items = all_report_items[:limit]
     result = {
         "model_path": str(model_path),
         "method": model["method"],
         "training_source": model.get("dataset_dir"),
         "project_graphs": [str(arc_graph), str(str_graph), str(mep_graph)],
+        "candidate_count": len(all_report_items),
         "report_items": report_items,
+        "all_candidates": all_report_items,
         "note": "Scores combine geometric overlap from the three RDF graphs with an embedding score trained on public BIM spatial relationship data.",
     }
     output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -398,8 +474,15 @@ def create_coordination_report(
     for index, item in enumerate(report_items, start=1):
         lines.append(f"{index}. {item['subject']} {item['predicate']} {item['object']}")
         lines.append(f"Score: {item['score']}")
-        lines.append(f"Reason: geometry score {item['geometry_score']}, embedding score {item['embedding_score']}")
+        lines.append(f"Risk level: {item['risk_level']}")
+        lines.append(
+            "Reason: "
+            f"geometry score {item['geometry_score']}, "
+            f"embedding score {item['embedding_score']}, "
+            f"dataset support {item['dataset_support_level']} ({item['dataset_support_count']} examples)"
+        )
         lines.append("")
+    lines.append(f"Total candidates checked: {len(all_report_items)}")
     lines.append("The report is a ranked review list. It is not an automatic construction decision.")
     output_text.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return result

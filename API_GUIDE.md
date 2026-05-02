@@ -199,6 +199,8 @@ Example output:
 }
 ```
 
+The long `subject` and `object` values are RDF identifiers. An RDF identifier is a unique name for one object in the graph.
+
 ### 4.4 `find_missing_coordination_links`
 
 Purpose:
@@ -371,6 +373,29 @@ Arguments:
 }
 ```
 
+The report contains these main fields:
+
+```text
+score
+risk_level
+geometry_score
+embedding_score
+dataset_support_level
+dataset_support_count
+```
+
+`geometry_score` comes from the three project RDF graphs. It measures how strongly two bounding boxes overlap.
+
+`embedding_score` comes from the trained TransE, RotatE, or ComplEx model. It measures whether the type pattern is common in the training dataset.
+
+`dataset_support_level` explains how much training evidence exists for the type pattern.
+
+```text
+direct = the same type pattern exists in the training dataset
+backoff = a related but more general type pattern exists
+none = no useful type pattern was found
+```
+
 ## 5. Local API Calls Without An MCP Client
 
 The local caller uses the same backend functions as the MCP tools. It is useful for testing.
@@ -426,11 +451,12 @@ face_overlap
 
 The model is trained on element-type triples rather than raw element IDs. This is needed because the public dataset and the project RDF graphs contain different building elements.
 
-The report score combines two parts:
+The report score combines three parts:
 
 ```text
 geometry score from the three RDF graphs
 embedding score from the trained public dataset model
+dataset support from the training triples
 ```
 
 ## 7. Current Scoring Method
@@ -451,4 +477,4 @@ If a service element is spatially related to a wall through lbd:containsInBoundi
 (service_element, penetrates, wall)
 ```
 
-The trained embedding model then scores the candidate type pattern. The final score combines the geometry score and the embedding score.
+The trained embedding model then scores the candidate type pattern. The final score combines the geometry score, embedding score, and dataset support.
