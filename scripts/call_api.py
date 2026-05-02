@@ -13,7 +13,7 @@ from coordination_core import (
     inspect_profession_graphs,
     score_candidate_triple,
 )
-from complex_profession_demo import run_complex_profession_demo
+from embedding_training import create_coordination_report, train_from_dataset
 
 
 def write_json(data) -> None:
@@ -74,10 +74,20 @@ def main() -> None:
     patch_parser.add_argument("predictions_json", type=Path)
     patch_parser.add_argument("--threshold", type=float, default=0.8)
 
-    complex_parser = subparsers.add_parser("complex-profession-demo")
-    complex_parser.add_argument("--output-json", type=Path, default=Path("outputs/05_complex_profession_predictions.json"))
-    complex_parser.add_argument("--output-text", type=Path, default=Path("outputs/00_final_demo_output.txt"))
-    complex_parser.add_argument("--limit", type=int, default=300)
+    train_parser = subparsers.add_parser("train-embedding")
+    train_parser.add_argument("--dataset", type=Path, default=Path("datasets/BIM Spatial Models for Construction Dependency Inf"))
+    train_parser.add_argument("--method", default="ComplEx", choices=["ComplEx", "TransE", "RotatE"])
+    train_parser.add_argument("--output-model", type=Path, default=Path("models/bim_spatial_complex_model.json"))
+    train_parser.add_argument("--max-rows", type=int)
+
+    report_parser = subparsers.add_parser("coordination-report")
+    report_parser.add_argument("arc_graph_uri", type=Path)
+    report_parser.add_argument("str_graph_uri", type=Path)
+    report_parser.add_argument("mep_graph_uri", type=Path)
+    report_parser.add_argument("--model", type=Path, default=Path("models/bim_spatial_complex_model.json"))
+    report_parser.add_argument("--output-text", type=Path, default=Path("outputs/coordination_report.txt"))
+    report_parser.add_argument("--output-json", type=Path, default=Path("outputs/coordination_report.json"))
+    report_parser.add_argument("--limit", type=int, default=12)
 
     args = parser.parse_args()
 
@@ -112,8 +122,20 @@ def main() -> None:
     elif args.command == "export-patch":
         predictions = json.loads(args.predictions_json.read_text(encoding="utf-8"))
         print(export_rdf_patch(predictions, args.threshold))
-    elif args.command == "complex-profession-demo":
-        write_json(run_complex_profession_demo(args.output_json, args.output_text, args.limit))
+    elif args.command == "train-embedding":
+        write_json(train_from_dataset(args.dataset, args.method, args.output_model, args.max_rows))
+    elif args.command == "coordination-report":
+        write_json(
+            create_coordination_report(
+                args.model,
+                args.output_text,
+                args.output_json,
+                args.arc_graph_uri,
+                args.str_graph_uri,
+                args.mep_graph_uri,
+                args.limit,
+            )
+        )
 
 
 if __name__ == "__main__":

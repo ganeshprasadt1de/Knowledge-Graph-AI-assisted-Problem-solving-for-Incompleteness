@@ -11,7 +11,7 @@ from coordination_core import (
     inspect_profession_graphs as inspect_profession_graphs_backend,
     score_candidate_triple as score_candidate_triple_backend,
 )
-from complex_profession_demo import run_complex_profession_demo
+from embedding_training import create_coordination_report, train_from_dataset
 
 
 mcp = FastMCP("building-coordination-kg")
@@ -91,13 +91,35 @@ def export_rdf_patch_tool(predictions: list[dict], threshold: float = 0.8) -> st
 
 
 @mcp.tool()
-def train_complex_on_profession_graphs(
-    output_json: str = "outputs/05_complex_profession_predictions.json",
-    output_text: str = "outputs/00_final_demo_output.txt",
-    limit: int = 300,
+def train_embedding_from_bim_spatial_data(
+    dataset_dir: str = "datasets/BIM Spatial Models for Construction Dependency Inf",
+    method: str = "ComplEx",
+    output_model: str = "models/bim_spatial_complex_model.json",
 ) -> dict:
-    """Train the ComplEx example on pseudo-labels from the three profession RDF graphs."""
-    return run_complex_profession_demo(output_json, output_text, limit)
+    """Train an embedding model from public BIM spatial relationship CSV files."""
+    return train_from_dataset(dataset_dir, method, output_model)
+
+
+@mcp.tool()
+def create_coordination_report_tool(
+    arc_graph_uri: str,
+    str_graph_uri: str,
+    mep_graph_uri: str,
+    model_path: str = "models/bim_spatial_complex_model.json",
+    output_text: str = "outputs/coordination_report.txt",
+    output_json: str = "outputs/coordination_report.json",
+    limit: int = 12,
+) -> dict:
+    """Create a ranked coordination report from three profession RDF graphs."""
+    return create_coordination_report(
+        model_path,
+        output_text,
+        output_json,
+        arc_graph_uri,
+        str_graph_uri,
+        mep_graph_uri,
+        limit,
+    )
 
 
 if __name__ == "__main__":
