@@ -20,7 +20,7 @@ Example:
 Door_01 bot:hasSubElement Opening_01
 ```
 
-## 2. Usefulness
+## 2. Why This Matters
 
 This check is useful before construction because coordination problems can be found in the building model instead of on site.
 
