@@ -20,7 +20,22 @@ Example:
 Door_01 bot:hasSubElement Opening_01
 ```
 
-## 2. Project Structure
+## 2. Usefulness
+
+This check is useful before construction because coordination problems can be found in the building model instead of on site.
+
+Examples:
+
+```text
+A duct passing through a beam can be reviewed before fabrication.
+A missing wall opening can be found before construction work starts.
+A structural engineer can review service penetrations before a load-bearing element is cut.
+A design team can avoid rework caused by missing coordination links.
+```
+
+Finding these issues early can reduce construction delays, reduce repeated work, and support safer review of structural elements.
+
+## 3. Project Structure
 
 Input files:
 
@@ -58,7 +73,7 @@ scripts/mcp_server.py
 scripts/complex_profession_demo.py
 ```
 
-## 3. System Requirements
+## 4. System Requirements
 
 The conversion was run on Windows with PowerShell.
 
@@ -72,7 +87,7 @@ Install the Python dependency:
 pip install -r requirements.txt
 ```
 
-## 4. Generate The RDF Graphs
+## 5. Generate The RDF Graphs
 
 Create the graph output directory:
 
@@ -108,7 +123,7 @@ graphs/professions/mep_lbd.ttl
 
 The conversion used IFCtoLBD options for building elements, properties, units, and geometry. The bundled CLI did not accept `--hasWKT` or `--hasPerformanceBoost`, so those options are not part of the documented command.
 
-## 5. Inspect The RDF Graphs
+## 6. Inspect The RDF Graphs
 
 Inspect all three profession graphs through the API:
 
@@ -134,7 +149,7 @@ python .\scripts\create_final_outputs.py
 
 This command writes abstract result files under `outputs/`. Raw RDF identifiers are replaced with readable names such as `MEP_DuctFitting_01` and `Structural_Beam_01`.
 
-## 6. API And MCP Server
+## 7. API And MCP Server
 
 The implemented API and MCP server are documented in:
 
@@ -170,7 +185,7 @@ Final presentation output:
 outputs/00_final_demo_output.txt
 ```
 
-## 7. Excluded Or Local-Only Files
+## 8. Excluded Or Local-Only Files
 
 The following paths are large or generated and should normally stay out of version control:
 
