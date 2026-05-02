@@ -104,9 +104,9 @@ def train_complex(
     positives: list[tuple[str, str, str]],
     negatives: list[tuple[str, str, str]],
     seed: int = 11,
-    dim: int = 32,
-    epochs: int = 220,
-    learning_rate: float = 0.035,
+    dim: int = 48,
+    epochs: int = 180,
+    learning_rate: float = 0.018,
 ) -> dict:
     rng = np.random.default_rng(seed)
     all_triples = positives + negatives
@@ -144,10 +144,10 @@ def train_complex(
             entity_re[t] -= learning_rate * error * (h_re * r_re - h_im * r_im)
             entity_im[t] -= learning_rate * error * (h_re * r_im + h_im * r_re)
 
-        entity_re *= 0.999
-        entity_im *= 0.999
-        relation_re *= 0.999
-        relation_im *= 0.999
+        entity_re *= 0.99
+        entity_im *= 0.99
+        relation_re *= 0.99
+        relation_im *= 0.99
 
     return {
         "entity_to_id": entity_to_id,

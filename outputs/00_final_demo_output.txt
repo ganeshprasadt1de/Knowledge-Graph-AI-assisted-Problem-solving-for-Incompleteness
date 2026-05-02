@@ -1,8 +1,8 @@
 Predicted missing facts
 
-(MEP_DuctSegment_01, penetrates, Structural_Beam_01): 1.0
-(MEP_DuctSegment_01, penetrates, Structural_Beam_02): 1.0
-(MEP_DuctFitting_01, penetrates, Structural_Beam_03): 0.999
+(MEP_DuctSegment_01, penetrates, Structural_Beam_01): 0.997
+(MEP_DuctSegment_01, penetrates, Structural_Beam_02): 0.995
+(MEP_DuctSegment_01, requiresOpeningIn, Structural_Beam_01): 0.978
 
 Interpretation
 
