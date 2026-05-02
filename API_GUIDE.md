@@ -364,6 +364,23 @@ Expected top predictions:
 
 This output is trained on artificial triples created inside `scripts/synthetic_complex_demo.py`. It demonstrates how ComplEx scoring works, but it is not trained on the real IFC-derived RDF graphs.
 
+Create abstract presentation outputs:
+
+```powershell
+python .\scripts\create_final_outputs.py
+```
+
+This writes:
+
+```text
+outputs/00_final_demo_output.txt
+outputs/01_graph_summary_abstract.json
+outputs/02_penetration_candidates_abstract.json
+outputs/03_sameas_candidates_abstract.json
+```
+
+The abstract JSON files use readable element names instead of raw RDF IRIs.
+
 ## 6. Use Of TransE, RotatE, And ComplEx
 
 TransE, RotatE, and ComplEx are included as method options in the API:
@@ -387,7 +404,7 @@ trained entity embeddings
 trained relation embeddings
 ```
 
-The current project has three generated profession RDF graphs. That graph is enough to demonstrate:
+The current project has three generated profession RDF graphs. These graphs are enough to demonstrate:
 
 ```text
 RDF input

@@ -1,8 +1,10 @@
-# Task 3 RDF Graph Preparation
+# Building Graph Coordination Link Prediction
 
 ## 1. Purpose
 
-This folder contains the working files for Task 3. The task uses architecture, structure, and MEP IFC files as building input, converts them to RDF graphs with IFCtoLBD, and uses the generated graphs as the basis for the written assignment and demo.
+The program converts architecture, structure, and MEP IFC models into RDF graphs and searches for missing coordination links between building elements.
+
+The main problem is data incompleteness. A duct may pass through a beam, or an architectural wall may correspond to a structural wall, but the graph may not explicitly contain that relationship.
 
 IFC means Industry Foundation Classes. It is a standard BIM data model for building objects, properties, and relationships.
 
@@ -18,7 +20,7 @@ Example:
 Door_01 bot:hasSubElement Opening_01
 ```
 
-## 2. Files
+## 2. Project Structure
 
 Input files:
 
@@ -38,7 +40,7 @@ graphs/professions/str_lbd.ttl
 graphs/professions/mep_lbd.ttl
 ```
 
-Documentation files:
+Documentation:
 
 ```text
 TASK3_SOLUTION.md
@@ -50,15 +52,19 @@ Utility script:
 
 ```text
 scripts/analyze_lbd_graph.py
+scripts/call_api.py
+scripts/create_final_outputs.py
+scripts/mcp_server.py
+scripts/synthetic_complex_demo.py
 ```
 
 ## 3. System Requirements
 
 The conversion was run on Windows with PowerShell.
 
-The folder includes a local OpenJDK archive because Java was not available on the system PATH. Maven was not required because the IFCtoLBD ZIP includes the needed Java libraries.
+The local OpenJDK runtime is used when Java is not available on the system PATH. Maven is not required because IFCtoLBD already includes the needed Java libraries.
 
-Python is needed only for the graph analysis script.
+Python is needed for the API scripts, MCP server, graph analysis, and synthetic ComplEx example.
 
 Install the Python dependency:
 
@@ -68,7 +74,7 @@ pip install -r requirements.txt
 
 ## 4. Generate The RDF Graphs
 
-Create the graph output folder:
+Create the graph output directory:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path graphs\professions
@@ -120,6 +126,14 @@ MEP: 171309 triples, 6955 BOT elements, 11 flow terminals, 7081 geometry links
 
 These numbers come from the generated RDF graphs, not from the original IFC files directly.
 
+Generate abstract presentation outputs:
+
+```powershell
+python .\scripts\create_final_outputs.py
+```
+
+This command writes abstract result files under `outputs/`. Raw RDF identifiers are replaced with readable names such as `MEP_DuctFitting_01` and `Structural_Beam_01`.
+
 ## 6. API And MCP Server
 
 The implemented API and MCP server are documented in:
@@ -142,7 +156,7 @@ Test the same backend locally:
 python .\scripts\call_api.py find-cross-links .\graphs\professions\arc_lbd.ttl .\graphs\professions\str_lbd.ttl .\graphs\professions\mep_lbd.ttl --limit 5
 ```
 
-Run the artificial ComplEx training demo:
+Run the artificial ComplEx training example:
 
 ```powershell
 python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_complex_predictions.json
@@ -150,9 +164,15 @@ python .\scripts\synthetic_complex_demo.py --output .\outputs\05_synthetic_compl
 
 This command uses synthetic triples from the script, not the real IFC-derived RDF graphs.
 
+Final presentation output:
+
+```text
+outputs/00_final_demo_output.txt
+```
+
 ## 7. Excluded Or Local-Only Files
 
-The following files and folders are large or generated and should normally stay out of version control:
+The following paths are large or generated and should normally stay out of version control:
 
 ```text
 tools/IFCtoLBD-master/

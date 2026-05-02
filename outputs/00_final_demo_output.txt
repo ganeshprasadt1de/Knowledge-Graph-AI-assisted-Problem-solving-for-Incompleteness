@@ -1,0 +1,20 @@
+Predicted missing facts
+
+(Duct_22, penetrates, Struct_Wall_57): 0.985
+(Duct_22, requiresOpeningIn, Struct_Wall_57): 0.984
+(Arch_Wall_101, sameAs, Struct_Wall_57): 0.963
+
+Interpretation
+
+The number is a plausibility score.
+A higher score means the model considers the candidate fact more likely.
+
+Examples of coordination problems
+
+A duct goes through a beam.
+A pipe passes through a fire-rated wall without a proper opening.
+A structural column appears inside a room where the architect expected empty space.
+A ceiling is designed too low because MEP ducts need more space.
+An opening exists in the architectural model but not in the structural model.
+
+These are real design coordination problems.

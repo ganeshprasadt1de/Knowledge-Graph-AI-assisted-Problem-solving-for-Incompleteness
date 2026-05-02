@@ -1,14 +1,15 @@
-﻿{
+{
   "method": "rule",
   "status": "ok",
-  "candidate_count": 260,
+  "candidate_count": 258,
   "candidates": [
     {
-      "subject": "https://example.org/professions/mep/ductfitting_a67143fa-0884-41a0-b6e9-3c9e8fe3aba4",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_bbf8378f-8492-45a2-9f13-25c7dda76551",
+      "triple": [
+        "MEP_DuctFitting_01",
+        "penetrates",
+        "Structural_Beam_01"
+      ],
       "score": 0.666,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -17,11 +18,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e9794",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_02"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -30,11 +32,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e9784",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_03"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -43,11 +46,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_722e7e59-3552-4106-8c03-8a4ed87e979c",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_04"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -56,11 +60,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfb9c",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_05"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -69,11 +74,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_d37a79b2-7606-4800-b215-3039a7be8447",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_06"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -82,11 +88,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a3571b2e-b022-4077-bda7-db368f2bd709",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfbc5",
+      "triple": [
+        "MEP_DuctSegment_01",
+        "penetrates",
+        "Structural_Beam_07"
+      ],
       "score": 0.654,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -95,11 +102,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductsegment_a67143fa-0884-41a0-b6e9-3c9e8fe3abba",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_fd542353-5aed-4ee2-8baa-b1272d4fe72c",
+      "triple": [
+        "MEP_DuctSegment_02",
+        "penetrates",
+        "Structural_Beam_08"
+      ],
       "score": 0.641,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -108,11 +116,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductfitting_90ea0414-b091-440a-904a-c6bd4ee72ab6",
-      "predicate": "penetrates",
-      "object": "https://example.org/professions/str/beam_d88be54c-45e2-4c41-91ae-e8312a1bfb9c",
+      "triple": [
+        "MEP_DuctFitting_02",
+        "penetrates",
+        "Structural_Beam_05"
+      ],
       "score": 0.637,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",
@@ -121,11 +130,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/mep/ductfitting_a67143fa-0884-41a0-b6e9-3c9e8fe3aba4",
-      "predicate": "requiresOpeningIn",
-      "object": "https://example.org/professions/str/beam_bbf8378f-8492-45a2-9f13-25c7dda76551",
+      "triple": [
+        "MEP_DuctFitting_01",
+        "requiresOpeningIn",
+        "Structural_Beam_01"
+      ],
       "score": 0.6,
-      "method": "rule",
       "evidence": [
         "MEP element is typed as a duct, duct fitting, or flow terminal",
         "structure element is typed as wall, beam, column, or slab",

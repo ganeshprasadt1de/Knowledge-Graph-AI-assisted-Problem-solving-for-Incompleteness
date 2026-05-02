@@ -1,14 +1,15 @@
-﻿{
+{
   "method": "rule",
   "status": "ok",
   "candidate_count": 2,
   "candidates": [
     {
-      "subject": "https://example.org/professions/arc/wall_a03add59-4d19-48e3-b25b-2f947f4b471f",
-      "predicate": "sameAs",
-      "object": "https://example.org/professions/str/wall_17836a3c-e764-47fa-a2e0-082164437e0d",
+      "triple": [
+        "Architectural_Wall_01",
+        "sameAs",
+        "Structural_Wall_01"
+      ],
       "score": 0.558,
-      "method": "rule",
       "evidence": [
         "architecture element is typed as beo:Wall",
         "structure element is typed as beo:Wall",
@@ -17,11 +18,12 @@
       ]
     },
     {
-      "subject": "https://example.org/professions/arc/wall_a03add59-4d19-48e3-b25b-2f947f4b471f",
-      "predicate": "sameAs",
-      "object": "https://example.org/professions/str/wall_dded2a59-7629-4456-bb60-fb05ab920ffe",
+      "triple": [
+        "Architectural_Wall_01",
+        "sameAs",
+        "Structural_Wall_02"
+      ],
       "score": 0.552,
-      "method": "rule",
       "evidence": [
         "architecture element is typed as beo:Wall",
         "structure element is typed as beo:Wall",
